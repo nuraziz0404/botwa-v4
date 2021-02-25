@@ -10,7 +10,7 @@ wa.create({
     headless: false,
     killProcessOnBrowserClose: true,
     autoRefresh:true, //default to true
-    safeMode: true,,
+    safeMode: true,
     hostNotificationLang: 'PT_BR',
     logConsole: false,
     popup: true,

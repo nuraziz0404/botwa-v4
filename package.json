@@ -1,0 +1,25 @@
+{
+  "name": "botwa-v4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "pm2": "pm2 start index.js && pm2 log 0",
+    "test": "node --inspect index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuraziz0404/botwa-v4.git"
+  },
+  "author": "Aziz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nuraziz0404/botwa-v4/issues"
+  },
+  "homepage": "https://github.com/nuraziz0404/botwa-v4#readme",
+  "dependencies": {
+    "@open-wa/wa-automate": "^3.6.10",
+    "pm2": "^4.5.4"
+  }
+}

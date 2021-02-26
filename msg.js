@@ -1,23 +1,42 @@
 const { constants } = require("buffer");
 const { clearLine } = require("readline");
 const { decryptMedia } = require("@open-wa/wa-automate");
+const jesonPath = './sticker.json';
+var jeson = require(jesonPath);
+const fs = require('fs')
 
 module.exports = handle = async (client, message) => {
   //console.log("ini handle msg");
+  /*
+  jeson = {message};
+  await fs.writeFile(jesonPath, JSON.stringify(jeson, null, 2), function writeJSON(err) {
+    if (err) console.log(err);
+    //console.log(jeson);
+    console.log('writing to ' + jesonPath);
+  });
+  */
   const isQuotedImage = message.quotedMsg && message.quotedMsg.type === "image";
   const isQuotedVideo = message.quotedMsg && message.quotedMsg.type === "video";
   const isQuotedChat = message.quotedMsg && message.quotedMsg.type === "chat";
-  const stickerMetadata = { pack: "CRazyzBOT", author: message.sender.pushname };
-  
+  const stickerMetadata = { pack: "CRazyzBOT", author: message.sender.pushname, keepScale: true };
+  let { isMedia, mimetype } = message;
   const uaOverride = process.env.UserAgent;
-
-  const isCmd = message.body.startsWith('/');
-  const command = message.body.slice(1).trim().split(/ +/).shift().toLowerCase();
+  if(message.type == "image"){
+    console.log('get image')
+    if(message.caption)var body = message.caption
+    else var body = ""
+  }else if(message.type == "chat"){
+    console.log('get chat')
+    var body = message.body
+  }
+  console.log("body:", body)
+  const isCmd = body.startsWith('/');
+  const command = body.slice(1).trim().split(/ +/).shift().toLowerCase();
 if(isCmd){
   switch (command) {
     case "sticker":
     case "stiker":
-    if(isQuotedImage == true){
+    if(isQuotedImage || isMedia){
       const encryptMedia = isQuotedImage ? message.quotedMsg : message;
       const _mimetype = isQuotedImage ? message.quotedMsg.mimetype : mimetype;
       const mediaData = await decryptMedia(encryptMedia, uaOverride);

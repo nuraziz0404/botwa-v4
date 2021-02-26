@@ -20,6 +20,7 @@
   "homepage": "https://github.com/nuraziz0404/botwa-v4#readme",
   "dependencies": {
     "@open-wa/wa-automate": "^3.6.10",
+    "fs": "0.0.1-security",
     "pm2": "^4.5.4"
   }
 }

@@ -33,6 +33,8 @@ module.exports = handle = async (client, message) => {
   const isCmd = body.startsWith('/');
   const command = body.slice(1).trim().split(/ +/).shift().toLowerCase();
 if(isCmd){
+  client.sendSeen(message.from);
+  client.simulateTyping(message.from, true)
   switch (command) {
     case "sticker":
     case "stiker":
@@ -56,6 +58,6 @@ if(isCmd){
 };
 
 function sticker(client, message){
-    client.reply(message.from, 'Reply gambar dengan pesan "/sticker"', message.id)
+    client.reply(message.from, 'Kirim/reply gambar dengan caption "/sticker"', message.id)
     return
 }

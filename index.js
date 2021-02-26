@@ -35,7 +35,7 @@ function start(client) {
   });
   client.onMessage((message) => {
     //console.log('konten: ', message.body);
-      console.log("new message: ", message.body);
+      //console.log("new message: ", message.body);
       if (message.body === "tes") {
         client.sendSeen(message.from);
         client.simulateTyping(message.from, true)

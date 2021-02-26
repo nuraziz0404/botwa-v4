@@ -4,6 +4,7 @@ const { decryptMedia } = require("@open-wa/wa-automate");
 const jesonPath = './sticker.json';
 var jeson = require(jesonPath);
 const fs = require('fs')
+const status = require('minecraft-server-status');
 
 module.exports = handle = async (client, message) => {
   //console.log("ini handle msg");
@@ -32,6 +33,9 @@ module.exports = handle = async (client, message) => {
   console.log("body:", body)
   const isCmd = body.startsWith('/');
   const command = body.slice(1).trim().split(/ +/).shift().toLowerCase();
+  const args = body.trim().split(/ +/).slice(1);
+
+
 if(isCmd){
   client.sendSeen(message.from);
   client.simulateTyping(message.from, true)
@@ -50,6 +54,36 @@ if(isCmd){
         sticker(client, message)
     }
       break;
+    case "minecraft":
+      if(args.length == 0)args[0] = "mc.avehotel.pw"
+      //console.log(args[0]);
+      status(args[0], 25565, response => {
+        //console.log(response)
+        let status;
+        response.online ? status = "online" : status = "offline"
+        var motd = response.motd.replace(/§./g, '')
+        var online = response.players.now
+        var onlineList = response.players.sample
+        //console.log(status)
+        //console.log(motd)
+        //console.log(online)
+        //console.log(onlineList)
+        let data = "";
+        data += `Status             : ${status}\n`
+        data += `server             : ${args[0]}\n`
+        data += `MOTD             : ${motd}\n`
+        data += `Players Online : ${online}\n`
+        data += `\n╔══✪〘 Online Players List 〙✪══\n`
+        var i;
+        for (i = 0; i < onlineList.length; i++) {
+          data += `╠═ ${onlineList[i].name.replace(/§./g, '')}\n`
+        }
+        data += `╚═〘 *CRazyzBOT* 〙`
+        client.reply(message.from, data, message.id)
+
+        //str.replace(/§./g, '')
+    })
+    break;
     default:
       sticker(client, message)
     // code block

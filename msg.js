@@ -5,6 +5,8 @@ const jesonPath = './sticker.json';
 var jeson = require(jesonPath);
 const fs = require('fs')
 const status = require('minecraft-server-status');
+const zsExtract = require("zs-extract");
+const { Console } = require("console");
 
 module.exports = handle = async (client, message) => {
   //console.log("ini handle msg");
@@ -84,6 +86,15 @@ if(isCmd){
         //str.replace(/§./g, '')
     })
     break;
+    case 'zp':
+    case 'zippyshare':
+      if(args.length == 0) return sticker(client, message)
+      client.reply(message.from, "please wait...", message.id)
+      zsExtract.extract(args[0]).then(async(data)=>{
+        console.log(data.download)
+        client.sendFile(message.from, data.download, data.filename, message.id)
+      })
+      break;
     default:
       sticker(client, message)
     // code block
@@ -92,6 +103,10 @@ if(isCmd){
 };
 
 function sticker(client, message){
-    client.reply(message.from, 'Kirim/reply gambar dengan caption "/sticker"', message.id)
+  let help = "";
+  help += `menu: \n`
+  help += `- /sticker\n`
+  help += `- /zippyshare <link zippyshare>`
+    client.reply(message.from, help, message.id)
     return
 }

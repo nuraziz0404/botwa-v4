@@ -7,6 +7,7 @@ const fs = require('fs')
 const status = require('minecraft-server-status');
 const zsExtract = require("zs-extract");
 const { Console } = require("console");
+//const toPdf = require('office-to-pdf')
 
 module.exports = handle = async (client, message) => {
   //console.log("ini handle msg");
@@ -74,16 +75,15 @@ if(isCmd){
         } else
           return client.reply(message.from, `Format salah, silahkan reply sticker yang ingin dijadikan gambar dengan caption "/toimg"!`, message.id);
         break;
-    
+    /*
     case "tes":
       const mediaData = await decryptMedia(message.quotedMsg);     
-      /* fs.writeFile(`./${message.quotedMsg.filename}`, base64, 'base64', function(err) {
+      fs.writeFile(`./${message.quotedMsg.filename}`, base64, 'base64', function(err) {
         if(err) {
             return console.log(err);
         }
         console.log("The file was saved!");
-      }); */ 
-        const toPdf = require('office-to-pdf')
+      }); 
         var pdfBuffer = await toPdf(mediaData)
         fs.writeFileSync("./tes.pdf", pdfBuffer)
         //const base64 = pdfBuffer.toString("base64") 
@@ -91,6 +91,7 @@ if(isCmd){
 
     
     break;
+    */
     
     case "minecraft":
       if(args.length == 0)args[0] = "mc.avehotel.pw"
@@ -142,6 +143,7 @@ function sticker(client, message){
   let help = "";
   help += `menu: \n`
   help += `- /sticker\n`
+  help += `- /getimage\n`
   help += `- /zippyshare <link zippyshare>`
     client.reply(message.from, help, message.id)
     return

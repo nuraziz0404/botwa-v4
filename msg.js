@@ -11,13 +11,14 @@ const { Console } = require("console");
 
 module.exports = handle = async (client, message) => {
   //console.log("ini handle msg");
-  
+  /*
   jeson = {message};
   await fs.writeFile(jesonPath, JSON.stringify(jeson, null, 2), function writeJSON(err) {
     if (err) console.log(err);
     //console.log(jeson);
     console.log('writing to ' + jesonPath);
   });
+  */
   
   const isQuotedImage = message.quotedMsg && message.quotedMsg.type === "image";
   const isQuotedVideo = message.quotedMsg && message.quotedMsg.type === "video";

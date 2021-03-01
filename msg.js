@@ -10,20 +10,22 @@ const { Console } = require("console");
 
 module.exports = handle = async (client, message) => {
   //console.log("ini handle msg");
-  /*
+  
   jeson = {message};
   await fs.writeFile(jesonPath, JSON.stringify(jeson, null, 2), function writeJSON(err) {
     if (err) console.log(err);
     //console.log(jeson);
     console.log('writing to ' + jesonPath);
   });
-  */
+  
   const isQuotedImage = message.quotedMsg && message.quotedMsg.type === "image";
   const isQuotedVideo = message.quotedMsg && message.quotedMsg.type === "video";
   const isQuotedChat = message.quotedMsg && message.quotedMsg.type === "chat";
   const stickerMetadata = { pack: "CRazyzBOT", author: message.sender.pushname, keepScale: true };
   let { isMedia, mimetype } = message;
   const uaOverride = process.env.UserAgent;
+  var body = message.type == "chat" ? message.body : message.type == "image" ? message.caption : ""
+  /*
   if(message.type == "image"){
     console.log('get image')
     if(message.caption)var body = message.caption
@@ -32,6 +34,7 @@ module.exports = handle = async (client, message) => {
     console.log('get chat')
     var body = message.body
   }
+  */
   console.log("body:", body)
   const isCmd = body.startsWith('/');
   const command = body.slice(1).trim().split(/ +/).shift().toLowerCase();
@@ -56,6 +59,39 @@ if(isCmd){
         sticker(client, message)
     }
       break;
+      
+      case "getimage":
+      case "getimg":
+      case "toimg":
+        if (message.quotedMsg && message.quotedMsg.type == "sticker") {
+          const mediaData = await decryptMedia(message.quotedMsg);
+          client.reply(message.from, `Sedang di proses! Silahkan tunggu sebentar...`, message.id);
+          const imageBase64 = `data:${message.quotedMsg.mimetype};base64,${mediaData.toString("base64")}`;
+          await client.sendFile(message.from, imageBase64, "imgsticker.jpg", "Berhasil convert Sticker to Image!", message.id)
+            .then(() => {
+              console.log(`Sticker to Image Processed`);
+            });
+        } else
+          return client.reply(message.from, `Format salah, silahkan reply sticker yang ingin dijadikan gambar dengan caption "/toimg"!`, message.id);
+        break;
+    
+    case "tes":
+      const mediaData = await decryptMedia(message.quotedMsg);     
+      /* fs.writeFile(`./${message.quotedMsg.filename}`, base64, 'base64', function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
+      }); */ 
+        const toPdf = require('office-to-pdf')
+        var pdfBuffer = await toPdf(mediaData)
+        fs.writeFileSync("./tes.pdf", pdfBuffer)
+        //const base64 = pdfBuffer.toString("base64") 
+        client.sendFile(message.from, './tes.pdf', "convert.pdf", message.id)
+
+    
+    break;
+    
     case "minecraft":
       if(args.length == 0)args[0] = "mc.avehotel.pw"
       //console.log(args[0]);

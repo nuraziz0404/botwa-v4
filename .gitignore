@@ -1,8 +1,6 @@
 node_modules
 .node-persist
 logs
-
-
-package-lock.json
-sticker.json
-split.js
+/package-lock.json
+/sticker.json
+/split.js

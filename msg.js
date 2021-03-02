@@ -95,7 +95,8 @@ if(isCmd){
     */
     
     case "minecraft":
-      if(args.length == 0)args[0] = "mc.avehotel.pw"
+    case "mc":
+      if(args.length == 0)args[0] = "mcnew.avehotel.pw"
       //console.log(args[0]);
       status(args[0], 25565, response => {
         //console.log(response)

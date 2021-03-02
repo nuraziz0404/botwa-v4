@@ -1,8 +1,8 @@
 const { constants } = require("buffer");
 const { clearLine } = require("readline");
 const { decryptMedia } = require("@open-wa/wa-automate");
-const jesonPath = './sticker.json';
-var jeson = require(jesonPath);
+//const jesonPath = './sticker.json';
+//var jeson = require(jesonPath);
 const fs = require('fs')
 const status = require('minecraft-server-status');
 const zsExtract = require("zs-extract");

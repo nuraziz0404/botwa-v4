@@ -7,7 +7,7 @@ const fs = require('fs')
 const status = require('minecraft-server-status');
 const zsExtract = require("zs-extract");
 const { Console } = require("console");
-//const toPdf = require('office-to-pdf')
+const toPdf = require('office-to-pdf')
 
 module.exports = handle = async (client, message) => {
   //console.log("ini handle msg");
@@ -76,8 +76,8 @@ if(isCmd){
         } else
           return client.reply(message.from, `Format salah, silahkan reply sticker yang ingin dijadikan gambar dengan caption "/toimg"!`, message.id);
         break;
-    /*
-    case "tes":
+    
+    case "pdf":
       const mediaData = await decryptMedia(message.quotedMsg);     
       fs.writeFile(`./${message.quotedMsg.filename}`, base64, 'base64', function(err) {
         if(err) {
@@ -92,7 +92,7 @@ if(isCmd){
 
     
     break;
-    */
+    
     
     case "minecraft":
     case "mc":
